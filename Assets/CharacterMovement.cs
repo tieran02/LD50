@@ -5,7 +5,6 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
-    private Vector3 playerVelocity;
     private float playerSpeed = 5.0f;
     // Start is called before the first frame update
     private void Start()
@@ -13,7 +12,7 @@ public class CharacterMovement : MonoBehaviour
         //Get controller reference for character Controller.
         controller = gameObject.GetComponent<CharacterController>();
         //No Jumping allowed, vertical velocity always set to 0
-        playerVelocity.y = 0f;
+        
     }
 
     // Update is called once per frame
