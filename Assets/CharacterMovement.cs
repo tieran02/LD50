@@ -6,12 +6,18 @@ public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
     private float playerSpeed = 5.0f;
+    private int playerStress = 0;
+
+    public StressBar stressBar;
     // Start is called before the first frame update
     private void Start()
     {
         //Get controller reference for character Controller.
         controller = gameObject.GetComponent<CharacterController>();
-        //No Jumping allowed, vertical velocity always set to 0
+        //Sets player initial stress
+        playerStress = 0;
+        //Initialises stress bar to 0 current stress.
+        stressBar.Initialize();
         
     }
 
@@ -28,5 +34,14 @@ public class CharacterMovement : MonoBehaviour
             //Rotates player to the direction of movement
             controller.transform.forward = move;
         }
+    }
+
+    public void addStress(int stress)
+    {
+        //Store increased stress value.
+        playerStress += stress;
+        //Update stress bar
+        stressBar.setStress(playerStress);
+
     }
 }
