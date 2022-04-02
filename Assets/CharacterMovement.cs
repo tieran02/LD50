@@ -5,7 +5,10 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
     private float playerSpeed = 5.0f;
+    private float gravityValue = -9.81f;
     private int playerStress = 0;
 
     public StressBar stressBar;
@@ -18,12 +21,18 @@ public class CharacterMovement : MonoBehaviour
         playerStress = 0;
         //Initialises stress bar to 0 current stress.
         stressBar.Initialize();
+
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
         //Gets horizontal and vertical input and translates it to a vector.
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         //Passes the absolute movement vector (direction *time since last frame * speed)
@@ -33,6 +42,11 @@ public class CharacterMovement : MonoBehaviour
         {
             //Rotates player to the direction of movement
             controller.transform.forward = move;
+        }
+        if(!groundedPlayer)
+        {
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
         }
     }
 
