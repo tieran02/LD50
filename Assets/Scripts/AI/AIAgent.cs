@@ -6,40 +6,19 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIAgent : MonoBehaviour
 {
-    enum TargetType
-    {
-        Station,
-        Desk
-    }
-
-    public List<Transform> Stations;
-    public List<Transform> Desks;
-
-    public float SecondsAtDesk = 5.0f;
-    public float SecondsAtStation = 0.2f; //This will be replaced with the station task duration
-    public float TargetDeskChance = 0.25f;
-
     public float CurrentWaitTime = 0.0f;
 
-    private NavMeshAgent Agent;
+    private NavMeshAgent agent;
+    private WorkManager workManager;
 
-    public int chosenTargetIndex = -1;
-    private TargetType targetType;
-
+    [SerializeField]
+    private float CheckForWorkTimer;
     private void Awake()
     {
-        Agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        workManager = FindObjectOfType<WorkManager>();
 
-        //Get all targets
-        foreach(var station in GameObject.FindGameObjectsWithTag("Station"))
-        {
-            Stations.Add(station.transform);
-        }
-
-        foreach (var desk in GameObject.FindGameObjectsWithTag("Desk"))
-        {
-            Desks.Add(desk.transform);
-        }
+        CheckForWorkTimer = 0.0f;
     }
 
     // Start is called before the first frame update
@@ -51,80 +30,61 @@ public class AIAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Stations.Count == 0 || Desks.Count == 0)
-            return;
+        agent.avoidancePriority = 50;
+        CheckForWorkTimer -= Time.deltaTime;
 
-        if (chosenTargetIndex < 0)
+        WorkStation station = null;
+        if(workManager.HasWork(this, ref station))
         {
-            SetNewTarget();
-        }
+            //We have a station, go to it
+            agent.destination = station.transform.position;
+            agent.avoidancePriority = 100;
 
-        bool reachedTarget = ReachedTarget();
-        if(reachedTarget)
-        {
-            if(WaitingAtTarget())
-                CurrentWaitTime -= Time.deltaTime;
-            else
+            if (ReachedStation(station))
             {
-                SetNewTarget();
+                station.WorkerUseStation();
+                CheckForWorkTimer = Random.Range(10, 30); //look for a new job between 10-30 seconds if we didn't find a job
             }
         }
-
-
-        WalkToTarget();
-    }
-
-    private bool ReachedTarget()
-    {
-        bool reached = false;
-        switch (targetType)
+        else if(CheckForWorkTimer <= 0.0f)
         {
-            case TargetType.Station:
-                reached = Vector3.Distance(transform.position, Stations[chosenTargetIndex].position) < 1.0f;
-                break;
-            case TargetType.Desk:
-                reached = Vector3.Distance(transform.position, Desks[chosenTargetIndex].position) < 1.5f;
-                break;
-        }
-
-        return reached;
-    }
-
-    private bool WaitingAtTarget()
-    {
-        return CurrentWaitTime > 0.0f;
-    }
-
-    private void SetNewTarget()
-    {
-        float rand = Random.value;
-
-        if(rand <= TargetDeskChance)
-        {
-            //For now just pick a random desk
-            chosenTargetIndex = Random.Range(0, Desks.Count-1);
-            CurrentWaitTime = SecondsAtDesk;
-            targetType = TargetType.Desk;
+            //Request a new job
+            if(!workManager.RequestWork(this));
+                CheckForWorkTimer = Random.Range(5, 15); //look for a new job between 5-15 seconds if we didn't find a job
         }
         else
         {
-            chosenTargetIndex = Random.Range(0, Stations.Count-1);
-            CurrentWaitTime = SecondsAtStation;
-            targetType = TargetType.Station;
+            //No work, just go to desk or wonder
+            if(workManager.DeskOwnerLookup.ContainsKey(gameObject))
+            {
+                //we got a desk so just go work at desk
+                int deskIndex = workManager.DeskOwnerLookup[gameObject];
+                agent.destination = workManager.DeskTargets[deskIndex].transform.position;
+                agent.avoidancePriority = 150;
+            }
+            else
+            {
+                // just wonder around
+                if(agent.remainingDistance <= 0.8f)
+                {
+                    Wonder();
+                }
+            }
         }
-
     }
 
-    private void WalkToTarget()
+    private bool ReachedStation(WorkStation station)
     {
-        switch (targetType)
-        {
-            case TargetType.Station:
-                Agent.destination = Stations[chosenTargetIndex].position;
-                break;
-            case TargetType.Desk:
-                Agent.destination = Desks[chosenTargetIndex].position;
-                break;
-        }
+        return Vector3.Distance(transform.position, station.transform.position) < 1.0f;
+    }
+
+    void Wonder()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * 10.0f;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDirection, out hit, 10.0f, 1);
+        Vector3 finalPosition = hit.position;
+        agent.destination = finalPosition;
     }
 }
