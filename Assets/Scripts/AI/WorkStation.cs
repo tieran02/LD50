@@ -22,6 +22,7 @@ public class WorkStation : MonoBehaviour
     public GameObject ActiveParticles;
 
     private float LastBreakTime = 0.0f;
+    private float LastPassiveTime = 0.0f;
     private float currentTimeLeft = 0.0f;
     [SerializeField]
     private bool active = false;
@@ -45,6 +46,7 @@ public class WorkStation : MonoBehaviour
     {
         if(PlayerWithinRange && Input.GetKey(KeyCode.F) && active)
         {
+            Debug.Log(currentRepairStatus);
             currentRepairStatus += Time.deltaTime;
             if(currentRepairStatus >= RepairTime)
             {
@@ -53,8 +55,9 @@ public class WorkStation : MonoBehaviour
         }
 
         //Stations can also break passively
-        if(PassiveBreakChance > 0.0f && Time.time >= LastBreakTime + Cooldown)
+        if(!active && PassiveBreakChance > 0.0f && !OnPassiveCooldown())
         {
+            LastPassiveTime = Time.time;
             if (Random.value <= PassiveBreakChance)
                 TriggerStation();
         }
@@ -92,6 +95,16 @@ public class WorkStation : MonoBehaviour
     public bool IsActive()
     {
         return active;
+    }
+
+    public bool OnCooldown()
+    {
+        return Time.time < LastBreakTime + Cooldown;
+    }
+
+    public bool OnPassiveCooldown()
+    {
+        return Time.time < LastPassiveTime + PassiveBreakFrequency;
     }
 
     public void WorkerUseStation()

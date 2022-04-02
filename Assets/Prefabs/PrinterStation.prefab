@@ -270,12 +270,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cooldown: 15
-  TimeToFail: 7.5
-  StressToAdd: 10
-  WorkerBreakChance: 0.33
-  PassiveBreakChance: 0
-  PassiveBreakFrequency: 10
-  RepairTime: 5
+  TimeToFail: 15
+  StressToAdd: 15
+  WorkerBreakChance: 0.3
+  PassiveBreakChance: 0.05
+  PassiveBreakFrequency: 30
+  RepairTime: 3
   ActiveParticles: {fileID: 7973102338830123497}
   active: 0
   currentWorker: {fileID: 0}

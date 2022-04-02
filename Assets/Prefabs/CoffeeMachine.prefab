@@ -4900,13 +4900,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b7a30529377845ba1cef2c0a52d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cooldown: 5
-  TimeToFail: 30
+  Cooldown: 10
+  TimeToFail: 20
   StressToAdd: 5
-  WorkerBreakChance: 0.5
-  PassiveBreakChance: 0
-  PassiveBreakFrequency: 10
-  RepairTime: 5
+  WorkerBreakChance: 0.4
+  PassiveBreakChance: 0.05
+  PassiveBreakFrequency: 30
+  RepairTime: 2
   ActiveParticles: {fileID: 3246728687830631873}
   active: 0
   currentWorker: {fileID: 0}
