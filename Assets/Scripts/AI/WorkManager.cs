@@ -73,7 +73,7 @@ public class WorkManager : MonoBehaviour
         // but for now just assign out task as soon as ready
         foreach(var station in Stations)
         {
-            if(!station.HasWorker())
+            if(!station.HasWorker() && !station.IsActive())
             {
                 AssignWork(agent, station);
                 station.NotifyWorker(agent);

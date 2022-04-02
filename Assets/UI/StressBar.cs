@@ -8,6 +8,11 @@ public class StressBar : MonoBehaviour
 
     public Slider slider;
 
+    private void Awake()
+    {
+        slider = GetComponent<Slider>();
+    }
+
     public void Initialize()
     {
         slider.maxValue = 1;

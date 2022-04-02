@@ -91,7 +91,7 @@ public class AIAgent : MonoBehaviour
 
     private bool ReachedStation(WorkStation station)
     {
-        return Vector3.Distance(transform.position, station.transform.position) < 1.0f;
+        return Vector3.Distance(transform.position, station.transform.position) < 1.5f;
     }
 
     void Wonder()
