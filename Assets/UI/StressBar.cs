@@ -13,7 +13,7 @@ public class StressBar : MonoBehaviour
         slider.maxValue = stress;
         slider.value = stress;
     }
-    public void setStress(int stress);
+    public void setStress(int stress)
     {
         slider.value = stress;
     }

@@ -11,7 +11,6 @@ public class CharacterMovement : MonoBehaviour
     {
         //Get controller reference for character Controller.
         controller = gameObject.GetComponent<CharacterController>();
-        //No Jumping allowed, vertical velocity always set to 0
         
     }
 
