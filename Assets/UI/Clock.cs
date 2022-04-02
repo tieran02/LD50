@@ -22,7 +22,7 @@ public class Clock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        timer += Time.deltaTime*60;
         minutes = (((int)timer)%3600)/60;
         hours = (((int)timer)/3600)%24;
         clockText.text = hours.ToString().PadLeft(2,'0')+ ":" + minutes.ToString().PadLeft(2,'0');
