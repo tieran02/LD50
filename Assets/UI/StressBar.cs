@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class StressBar : MonoBehaviour
 {
 
-    private Slider slider;
+    public Slider slider;
 
     public void SetMaxStress(int stress)
     {
         slider.maxValue = stress;
-        slider.value = stress;
+        slider.value = 0;
     }
     public void setStress(int stress)
     {
