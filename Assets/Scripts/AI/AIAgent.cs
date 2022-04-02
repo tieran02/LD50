@@ -23,7 +23,7 @@ public class AIAgent : MonoBehaviour
 
     private NavMeshAgent Agent;
 
-    private int chosenTargetIndex = -1;
+    public int chosenTargetIndex = -1;
     private TargetType targetType;
 
     private void Awake()
@@ -51,16 +51,27 @@ public class AIAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Stations.Count == 0)
+        if (Stations.Count == 0 || Desks.Count == 0)
             return;
 
-        if (chosenTargetIndex < 0 || ReachedTarget())
+        if (chosenTargetIndex < 0)
         {
-            if (CurrentWaitTime <= 0.0f)
+            SetNewTarget();
+        }
+
+        bool reachedTarget = ReachedTarget();
+        if(reachedTarget)
+        {
+            if(WaitingAtTarget())
+                CurrentWaitTime -= Time.deltaTime;
+            else
             {
                 SetNewTarget();
             }
         }
+
+
+        WalkToTarget();
     }
 
     private bool ReachedTarget()
@@ -70,20 +81,18 @@ public class AIAgent : MonoBehaviour
         {
             case TargetType.Station:
                 reached = Vector3.Distance(transform.position, Stations[chosenTargetIndex].position) < 1.0f;
-                if (reached && CurrentWaitTime <= 0.0f)
-                {
-                    CurrentWaitTime = SecondsAtStation;
-                    return true;
-                }
                 break;
             case TargetType.Desk:
-                reached = Vector3.Distance(transform.position, Desks[chosenTargetIndex].position) < 1.0f;
-                if (reached && CurrentWaitTime <= 0.0f)
-                    CurrentWaitTime = SecondsAtDesk;
+                reached = Vector3.Distance(transform.position, Desks[chosenTargetIndex].position) < 1.5f;
                 break;
         }
 
         return reached;
+    }
+
+    private bool WaitingAtTarget()
+    {
+        return CurrentWaitTime > 0.0f;
     }
 
     private void SetNewTarget()
@@ -93,16 +102,29 @@ public class AIAgent : MonoBehaviour
         if(rand <= TargetDeskChance)
         {
             //For now just pick a random desk
-            int chosenTargetIndex = Random.Range(0, Desks.Count);
-            Agent.destination = Desks[chosenTargetIndex].position;
+            chosenTargetIndex = Random.Range(0, Desks.Count-1);
+            CurrentWaitTime = SecondsAtDesk;
             targetType = TargetType.Desk;
         }
         else
         {
-            chosenTargetIndex = Random.Range(0, Stations.Count);
-            Agent.destination = Stations[chosenTargetIndex].position;
+            chosenTargetIndex = Random.Range(0, Stations.Count-1);
+            CurrentWaitTime = SecondsAtStation;
             targetType = TargetType.Station;
         }
 
+    }
+
+    private void WalkToTarget()
+    {
+        switch (targetType)
+        {
+            case TargetType.Station:
+                Agent.destination = Stations[chosenTargetIndex].position;
+                break;
+            case TargetType.Desk:
+                Agent.destination = Desks[chosenTargetIndex].position;
+                break;
+        }
     }
 }
