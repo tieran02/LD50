@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba5663164b1ec534c98fc76d845fdae9, type: 2}
+  - {fileID: 2100000, guid: f182dc49284cc4348a363eb65ff9538c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,7 +129,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1378028503423136090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d51c0777b6f91dd4082aeeef647afea0, type: 3}
+  m_Script: {fileID: 11500000, guid: 37642ac600c079549b3edee9892b5c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Targets: []
+  Stations: []
+  Desks: []
+  SecondsAtDesk: 5
+  SecondsAtStation: 0.2
+  TargetDeskChance: 0.25
+  CurrentWaitTime: 0
