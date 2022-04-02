@@ -6,39 +6,28 @@ public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private bool groundedPlayer;
     private float playerSpeed = 5.0f;
-    private float jumpHeight = 1.0f;
-    private float gravityValue = -9.81f;
     // Start is called before the first frame update
     private void Start()
     {
+        //Get controller reference for character Controller.
         controller = gameObject.GetComponent<CharacterController>();
+        //No Jumping allowed, vertical velocity always set to 0
+        playerVelocity.y = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y <0)
-        {
-            playerVelocity.y = 0f;
-        }
-
+        //Gets horizontal and vertical input and translates it to a vector.
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //Passes the absolute movement vector (direction *time since last frame * speed)
         controller.Move(move * Time.deltaTime * playerSpeed);
+        //If there is no movement input, tell the character controller how to move the player.
         if (move != Vector3.zero)
         {
+            //Rotates player to the direction of movement
             controller.transform.forward = move;
         }
-
-        // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -0.3f * gravityValue);
-        }
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
     }
 }
