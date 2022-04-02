@@ -8,13 +8,15 @@ public class StressBar : MonoBehaviour
 
     public Slider slider;
 
-    public void SetMaxStress(int stress)
+    public void Initialize()
     {
-        slider.maxValue = stress;
-        slider.value = 0;
+        slider.maxValue = 1;
+        slider.minValue = 0;
+        slider.value = 0.082f;
     }
     public void setStress(int stress)
     {
-        slider.value = stress;
+        //Map stress value from 0-> 100 to the range of values that the stress bar is visible for.
+        slider.value = ((float)stress)*((0.755f-0.082f)/(float)100);
     }
 }
