@@ -85,7 +85,7 @@ public class WorkManager : MonoBehaviour
             float taskTime = startTimeInSeconds + (spacing * i);
 
             //pick a random shift task
-            int shiftTask = Random.Range(0, ShiftStations.Count - 1);
+            int shiftTask = Random.Range(0, ShiftStations.Count);
             WorkTask task = new WorkTask
             {
                 assignedStaion = ShiftStations[shiftTask],
@@ -113,7 +113,7 @@ public class WorkManager : MonoBehaviour
         // Priorities shift stations
         foreach (var workTask in workTasks)
         {
-            if (clock.timer >= workTask.assignedTime && workTask.assignedStaion.HasFreeWorkSpace() && !workTask.assignedStaion.HasWorker(agent))
+            if (clock.timer >= workTask.assignedTime && !workTask.assignedStaion.PlayerOnly && workTask.assignedStaion.HasFreeWorkSpace() && !workTask.assignedStaion.HasWorker(agent))
             {
                 workTask.assignedStaion.NotifyWorker(agent);
                 return true;
@@ -162,6 +162,13 @@ public class WorkManager : MonoBehaviour
 
     private void Update()
     {
-       
+        //Trigger player only shift tasks
+        foreach (var workTask in workTasks)
+        {
+            if (clock.timer >= workTask.assignedTime && workTask.assignedStaion.PlayerOnly)
+            {
+                workTask.assignedStaion.TriggerStation();
+            }
+        }
     }
 }

@@ -57,7 +57,7 @@ public class CharacterMovement : MonoBehaviour
     public void addStress(int stress)
     {
         //Store increased stress value.
-        playerStress += stress;
+        playerStress = Mathf.Clamp(playerStress + stress,0,100);
         //Update stress bar
         stressBar.setStress(playerStress);
 

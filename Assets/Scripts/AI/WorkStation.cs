@@ -11,6 +11,7 @@ public class WorkStation : MonoBehaviour
     public float Cooldown = 10.0f;
     public float TimeToFail = 30.0f;
     public int StressToAdd = 10;
+    public int StressToRemove = 0;
     public float WorkerBreakChance = 0.5f;
 
     public float PassiveBreakChance = 0.0f;
@@ -207,6 +208,8 @@ public class WorkStation : MonoBehaviour
 
     public void Success()
     {
+        FindObjectOfType<CharacterMovement>()?.addStress(-StressToRemove);
+
         currentRepairStatus = 0.0f;
         currentTimeLeft = 0.0f;
         LastBreakTime = Time.time;
