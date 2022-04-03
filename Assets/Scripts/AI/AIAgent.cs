@@ -47,13 +47,22 @@ public class AIAgent : MonoBehaviour
         if(workManager.HasWork(this, ref station))
         {
             //We have a station, go to it
-            agent.destination = station.transform.position;
+            Vector3 pos;
+            Quaternion rot;
+            station.GetWorkTransform(this, out pos, out rot);
+
+            agent.destination = pos;
             agent.avoidancePriority = 75;
 
-            if (ReachedStation(station))
+            if (ReachedStation(pos))
             {
-                station.WorkerUseStation();
+                //snap to work pos
+                transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+                transform.rotation = rot;
+
+                station.WorkerUseStation(this);
                 CheckForWorkTimer = Random.Range(10, 30); //look for a new job between 10-30 seconds if we didn't find a job
+                workManager.RemoveTask(station);
             }
         }
         else if(CheckForWorkTimer <= 0.0f)
@@ -72,7 +81,7 @@ public class AIAgent : MonoBehaviour
                 agent.destination = workManager.DeskTargets[deskIndex].transform.position;
                 agent.avoidancePriority = 100;
 
-                if(agent.remainingDistance <= 0.1f)
+                if(ReachedStation(workManager.DeskTargets[deskIndex].transform.position))
                 {
                     transform.position = workManager.DeskTargets[deskIndex].transform.position;
                     transform.rotation = workManager.DeskTargets[deskIndex].transform.rotation;
@@ -81,7 +90,7 @@ public class AIAgent : MonoBehaviour
             else
             {
                 // just wonder around
-                if(agent.remainingDistance <= 0.8f)
+                if(ReachedStation(agent.destination))
                 {
                     Wonder();
                 }
@@ -89,9 +98,9 @@ public class AIAgent : MonoBehaviour
         }
     }
 
-    private bool ReachedStation(WorkStation station)
+    private bool ReachedStation(Vector3 pos)
     {
-        return Vector3.Distance(transform.position, station.transform.position) < 1.5f;
+        return Vector3.Distance(transform.position, pos) < 1.25f;
     }
 
     void Wonder()

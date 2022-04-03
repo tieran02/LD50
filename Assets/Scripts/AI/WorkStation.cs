@@ -6,6 +6,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SphereCollider))]
 public class WorkStation : MonoBehaviour
 {
+    public Transform[] WorkPoints;
+
     public float Cooldown = 10.0f;
     public float TimeToFail = 30.0f;
     public int StressToAdd = 10;
@@ -13,6 +15,10 @@ public class WorkStation : MonoBehaviour
 
     public float PassiveBreakChance = 0.0f;
     public float PassiveBreakFrequency = 10.0f;
+
+    public bool ShiftTask = false;
+    public bool PlayerOnly = false;
+    public bool PassiveOnly = false;
 
     public float RepairTime = 2.0f;
     private SphereCollider PlayerDetection;
@@ -27,12 +33,13 @@ public class WorkStation : MonoBehaviour
     [SerializeField]
     private bool active = false;
     [SerializeField]
-    private AIAgent currentWorker;
+    private List<AIAgent> currentWorkers;
 
     private void Awake()
     {
         PlayerDetection = GetComponent<SphereCollider>();
         PlayerDetection.isTrigger = true;
+        currentWorkers = new List<AIAgent>();
     }
 
     // Start is called before the first frame update
@@ -64,10 +71,12 @@ public class WorkStation : MonoBehaviour
 
         if (!active)
         {
-            ActiveParticles?.SetActive(false);
+            if(ActiveParticles != null)
+                ActiveParticles.SetActive(false);
             return;
         }
-        ActiveParticles?.SetActive(true);
+        if (ActiveParticles != null)
+            ActiveParticles?.SetActive(true);
 
 
         currentTimeLeft -= Time.deltaTime;
@@ -79,17 +88,43 @@ public class WorkStation : MonoBehaviour
 
     public void NotifyWorker(AIAgent agent)
     {
-        currentWorker = agent;
+        currentWorkers.Add(agent);
     }
 
-    public void ReleaseWorker()
+    public void ReleaseWorker(AIAgent agent)
     {
-        currentWorker = null;
+        currentWorkers.Remove(agent);
     }
 
-    public bool HasWorker()
+    public bool HasWorker(AIAgent agent)
     {
-        return currentWorker != null;
+        return currentWorkers.Contains(agent);
+    }
+
+    public bool HasAnyWorker()
+    {
+        return currentWorkers.Count > 0;
+    }
+
+    public bool HasFreeWorkSpace()
+    {
+        return currentWorkers.Count < WorkPoints.Length;
+    }
+
+    public bool GetWorkTransform(AIAgent agent, out Vector3 position, out Quaternion rotation)
+    {
+        int index = currentWorkers.IndexOf(agent);
+
+        if(index >= 0 && index < WorkPoints.Length)
+        {
+            position = WorkPoints[index].position;
+            rotation = WorkPoints[index].rotation;
+            return true;
+        }
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+
+        return false;
     }
 
     public bool IsActive()
@@ -107,11 +142,11 @@ public class WorkStation : MonoBehaviour
         return Time.time < LastPassiveTime + PassiveBreakFrequency;
     }
 
-    public void WorkerUseStation()
+    public void WorkerUseStation(AIAgent agent)
     {
         if (Random.value <= WorkerBreakChance)
             TriggerStation();
-        ReleaseWorker();
+        ReleaseWorker(agent);
     }
 
     public void TriggerStation()

@@ -306,16 +306,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b7a30529377845ba1cef2c0a52d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorkPoints: []
   Cooldown: 10
   TimeToFail: 30
   StressToAdd: 5
   WorkerBreakChance: 0
   PassiveBreakChance: 0.1
   PassiveBreakFrequency: 10
+  ShiftTask: 0
+  PlayerOnly: 0
+  PassiveOnly: 1
   RepairTime: 2
   ActiveParticles: {fileID: 7821307116516414385}
   active: 0
-  currentWorker: {fileID: 0}
+  currentWorkers: []
 --- !u!1 &7821307116516414385
 GameObject:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ Transform:
   m_Children:
   - {fileID: 4155182557411057169}
   - {fileID: 5461335927247479983}
+  - {fileID: 5689264691247793709}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,16 +270,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b7a30529377845ba1cef2c0a52d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorkPoints:
+  - {fileID: 5689264691247793709}
   Cooldown: 15
   TimeToFail: 15
   StressToAdd: 15
   WorkerBreakChance: 0.3
   PassiveBreakChance: 0.05
   PassiveBreakFrequency: 30
+  ShiftTask: 0
+  PlayerOnly: 0
+  PassiveOnly: 0
   RepairTime: 3
   ActiveParticles: {fileID: 7973102338830123497}
   active: 0
-  currentWorker: {fileID: 0}
+  currentWorkers: []
 --- !u!135 &4229944145274684853
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5191,3 +5197,33 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &8095162887953565662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5689264691247793709}
+  m_Layer: 0
+  m_Name: WorkPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5689264691247793709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095162887953565662}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000006407499}
+  m_LocalPosition: {x: 1.4330006, y: 0, z: -0.0000019073486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3771836664029856916}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Clock : MonoBehaviour
 {
     private Text clockText;
-    private float timer = 32400;
+    public float timer = 32400;
     private int hours;
     private int minutes;
 
