@@ -19,6 +19,8 @@ public class WorkStation : MonoBehaviour
     public bool ShiftTask = false;
     public bool PlayerOnly = false;
     public bool PassiveOnly = false;
+    public bool WaitForAllWorkers = false;
+    public bool WaitWhileActive = false;
 
     public float RepairTime = 2.0f;
     private SphereCollider PlayerDetection;
@@ -34,9 +36,11 @@ public class WorkStation : MonoBehaviour
     private bool active = false;
     [SerializeField]
     private List<AIAgent> currentWorkers;
+    private WorkManager workManager;
 
     private void Awake()
     {
+        workManager = FindObjectOfType<WorkManager>();
         PlayerDetection = GetComponent<SphereCollider>();
         PlayerDetection.isTrigger = true;
         currentWorkers = new List<AIAgent>();
@@ -96,6 +100,15 @@ public class WorkStation : MonoBehaviour
         currentWorkers.Remove(agent);
     }
 
+    public void ReleaseAllWorkers()
+    {
+        for (int i = 0; i < currentWorkers.Count; i++)
+        {
+            ReleaseWorker(currentWorkers[i]);
+            --i;
+        }
+    }
+
     public bool HasWorker(AIAgent agent)
     {
         return currentWorkers.Contains(agent);
@@ -149,6 +162,30 @@ public class WorkStation : MonoBehaviour
         ReleaseWorker(agent);
     }
 
+    public void AllWorkersUseStation()
+    {
+        if (!active && Random.value <= WorkerBreakChance)
+            TriggerStation();
+
+        if (!WaitWhileActive || !active)
+        {
+            ReleaseAllWorkers();
+        }
+    }
+
+    public bool AllWorkerInPosition()
+    {
+        if (currentWorkers.Count != WorkPoints.Length)
+            return false;
+
+        for (int i = 0; i < currentWorkers.Count; i++)
+        {
+            if (Vector3.Distance(currentWorkers[i].transform.position, WorkPoints[i].position) > 1.5f)
+                return false;
+        }
+        return true;
+    }
+
     public void TriggerStation()
     {
         currentTimeLeft = TimeToFail;
@@ -163,6 +200,9 @@ public class WorkStation : MonoBehaviour
         currentTimeLeft = 0.0f;
         LastBreakTime = Time.time;
         active = false;
+
+        ReleaseAllWorkers();
+        workManager.RemoveTask(this);
     }
 
     public void Success()
@@ -171,6 +211,9 @@ public class WorkStation : MonoBehaviour
         currentTimeLeft = 0.0f;
         LastBreakTime = Time.time;
         active = false;
+
+        ReleaseAllWorkers();
+        workManager.RemoveTask(this);
     }
 
     void OnTriggerStay(Collider other)

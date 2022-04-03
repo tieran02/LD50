@@ -40,6 +40,7 @@ public class AIAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        agent.enabled = true;
         agent.avoidancePriority = 50;
         CheckForWorkTimer -= Time.deltaTime;
 
@@ -59,10 +60,18 @@ public class AIAgent : MonoBehaviour
                 //snap to work pos
                 transform.position = new Vector3(pos.x, transform.position.y, pos.z);
                 transform.rotation = rot;
+                agent.enabled = false;
 
-                station.WorkerUseStation(this);
-                CheckForWorkTimer = Random.Range(10, 30); //look for a new job between 10-30 seconds if we didn't find a job
-                workManager.RemoveTask(station);
+
+                if (station.WaitForAllWorkers && station.AllWorkerInPosition())
+                {
+                    station.AllWorkersUseStation();
+                }
+                else if(!station.WaitForAllWorkers)
+                {
+                    CheckForWorkTimer = Random.Range(10, 30); //look for a new job between 10-30 seconds if we didn't find a job
+                    workManager.RemoveTask(station);
+                }
             }
         }
         else if(CheckForWorkTimer <= 0.0f)
@@ -85,6 +94,7 @@ public class AIAgent : MonoBehaviour
                 {
                     transform.position = workManager.DeskTargets[deskIndex].transform.position;
                     transform.rotation = workManager.DeskTargets[deskIndex].transform.rotation;
+                    agent.enabled = false;
                 }
             }
             else

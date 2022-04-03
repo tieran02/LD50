@@ -12,7 +12,6 @@ public enum WorkType
 public class WorkTask
 {
     public WorkStation assignedStaion;
-    public AIAgent assignedWorker;
     public float assignedTime;
 }
 
@@ -101,7 +100,6 @@ public class WorkManager : MonoBehaviour
     {
         WorkTask task = new WorkTask
         {
-            assignedWorker = agent,
             assignedStaion = station,
             assignedTime = scheduleTime
         };
@@ -115,9 +113,9 @@ public class WorkManager : MonoBehaviour
         // Priorities shift stations
         foreach (var workTask in workTasks)
         {
-            if (clock.timer >= workTask.assignedTime && workTask.assignedWorker == null && workTask.assignedStaion.HasFreeWorkSpace())
+            if (clock.timer >= workTask.assignedTime && workTask.assignedStaion.HasFreeWorkSpace() && !workTask.assignedStaion.HasWorker(agent))
             {
-                workTask.assignedWorker = agent;
+                workTask.assignedStaion.NotifyWorker(agent);
                 return true;
             }
         }
@@ -141,7 +139,7 @@ public class WorkManager : MonoBehaviour
     {
         foreach(var workTask in workTasks)
         {
-            if(workTask.assignedWorker == agent)
+            if(workTask.assignedStaion.HasWorker(agent))
             {
                 station = workTask.assignedStaion;
                 return true;
