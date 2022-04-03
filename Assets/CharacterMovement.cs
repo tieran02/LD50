@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour
     private bool groundedPlayer;
     private float playerSpeed = 5.0f;
     private float gravityValue = -9.81f;
-    private int playerStress = 0;
+    private float playerStress = 0;
 
     public StressBar stressBar;
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
-    public void addStress(int stress)
+    public void addStress(float stress)
     {
         //Store increased stress value.
         playerStress = Mathf.Clamp(playerStress + stress,0,100);
