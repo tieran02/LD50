@@ -117,19 +117,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5817634690289738013, guid: a359e7145b7922d4cb7bdf55834c0689, type: 3}
   m_PrefabInstance: {fileID: 706593167965575364}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &5212180960640517954
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 364575447016760725}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.71, y: 1.78, z: 1}
-  m_Center: {x: 0.13, y: 1, z: -0.57}
 --- !u!65 &1416561713243443606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -143,6 +130,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.06, y: 1.78, z: 2.39}
   m_Center: {x: -0.67, y: 1, z: 0.21}
+--- !u!65 &5212180960640517954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364575447016760725}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.71, y: 1.78, z: 1}
+  m_Center: {x: 0.13, y: 1, z: -0.57}
 --- !u!64 &7464258917975160181
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -193,6 +193,18 @@ PrefabInstance:
     - target: {fileID: 3939706230724138766, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.38113207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: ShiftTask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: PlayerOnly
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: PassiveOnly
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7150991030127640326, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_Name

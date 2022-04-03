@@ -50,7 +50,7 @@ public class CharacterMovement : MonoBehaviour
         //controller.Move(playerVelocity * Time.deltaTime);
         
         }
-        controller.height = -1f;
+        //controller.height = -1f;
     
 
     }

@@ -46,7 +46,7 @@ public class WorkStation : MonoBehaviour
         PlayerDetection.isTrigger = true;
         currentWorkers = new List<AIAgent>();
 
-        LastPassiveTime = Time.time + Random.Range(0, 30);
+        LastPassiveTime = Time.time + Random.Range(PassiveBreakFrequency * 0.5f, 10.0f);
     }
 
     // Start is called before the first frame update
