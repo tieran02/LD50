@@ -165,7 +165,7 @@ public class WorkManager : MonoBehaviour
         //Trigger player only shift tasks
         foreach (var workTask in workTasks)
         {
-            if (clock.timer >= workTask.assignedTime && workTask.assignedStaion.PlayerOnly)
+            if (clock.timer >= workTask.assignedTime && workTask.assignedStaion.PlayerOnly && !workTask.assignedStaion.IsActive())
             {
                 workTask.assignedStaion.TriggerStation();
             }

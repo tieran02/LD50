@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -60,6 +61,11 @@ public class CharacterMovement : MonoBehaviour
         playerStress = Mathf.Clamp(playerStress + stress,0,100);
         //Update stress bar
         stressBar.setStress(playerStress);
+
+        if(playerStress >= 100)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
 
     }
 }

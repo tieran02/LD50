@@ -56,7 +56,7 @@ public class WorkStation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerWithinRange && Input.GetKey(KeyCode.F) && active)
+        if(PlayerWithinRange && Input.GetButton("Use") && active)
         {
             Debug.Log(currentRepairStatus);
             currentRepairStatus += Time.deltaTime;
