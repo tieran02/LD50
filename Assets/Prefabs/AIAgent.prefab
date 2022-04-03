@@ -119,11 +119,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3666253469289955001}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.075, y: 1.0763, z: 0.129}
-  m_LocalScale: {x: 0.11858, y: 0.11858, z: 0.11858}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0.00075, y: -0.0012900006, z: 0.010762999}
+  m_LocalScale: {x: 0.0011858, y: 0.0011858002, z: 0.0011858002}
   m_Children: []
-  m_Father: {fileID: 6022507077799080745}
+  m_Father: {fileID: 5672339182906751741}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6419653540086327948
@@ -214,11 +214,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7029498894003919160}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.075, y: 1.0763, z: 0.129}
-  m_LocalScale: {x: 0.11858, y: 0.11858, z: 0.11858}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0.00075, y: -0.0012900006, z: 0.010762999}
+  m_LocalScale: {x: 0.0011858, y: 0.0011858002, z: 0.0011858002}
   m_Children: []
-  m_Father: {fileID: 6022507077799080745}
+  m_Father: {fileID: 5672339182906751741}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &749736733887447803
@@ -310,8 +310,6 @@ Transform:
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 113056553065887994}
-  - {fileID: 7513520599922971483}
   - {fileID: 2630043756448544894}
   m_Father: {fileID: 1378028503423136094}
   m_RootOrder: 0
@@ -325,7 +323,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -407,10 +405,19 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2087783722b50974db40f721605ef40e, type: 2}
+    - target: {fileID: 2421855707862594039, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 558e03e66961359439c3acfd65a1cc93, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
 --- !u!4 &2630043756448544894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
+  m_PrefabInstance: {fileID: 2591104299578957717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5672339182906751741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7876023681238672744, guid: 0b78c20e789b35445be8947eb25eb30e, type: 3}
   m_PrefabInstance: {fileID: 2591104299578957717}
   m_PrefabAsset: {fileID: 0}

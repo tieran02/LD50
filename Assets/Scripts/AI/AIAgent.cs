@@ -69,7 +69,13 @@ public class AIAgent : MonoBehaviour
                 }
                 else if(!station.WaitForAllWorkers)
                 {
-                    CheckForWorkTimer = Random.Range(10, 30); //look for a new job between 10-30 seconds if we didn't find a job
+                    station.WorkerUseStation(this);
+                    float baseMaxWait = 30;
+                    float baseMinWait = 10;
+                    workManager.DecreaseValueDifficulty(ref baseMaxWait);
+                    workManager.DecreaseValueDifficulty(ref baseMinWait);
+
+                    CheckForWorkTimer = Random.Range(baseMinWait, baseMaxWait);
                     workManager.RemoveTask(station);
                 }
             }
@@ -77,8 +83,12 @@ public class AIAgent : MonoBehaviour
         else if(CheckForWorkTimer <= 0.0f)
         {
             //Request a new job
-            if(!workManager.RequestWork(this));
-                CheckForWorkTimer = Random.Range(5, 15); //look for a new job between 5-15 seconds if we didn't find a job
+            float baseMaxWait = 30;
+            float baseMinWait = 10;
+            workManager.DecreaseValueDifficulty(ref baseMaxWait);
+            workManager.DecreaseValueDifficulty(ref baseMinWait);
+            if (!workManager.RequestWork(this));
+                CheckForWorkTimer = Random.Range(baseMinWait, baseMaxWait);
         }
         else
         {

@@ -225,6 +225,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2225699759655998490}
     m_Modifications:
+    - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: ActiveParticles
+      value: 
+      objectReference: {fileID: 7162628149351394827}
     - target: {fileID: 7150991030127640326, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_Name
       value: Computer
@@ -278,5 +282,10 @@ PrefabInstance:
 --- !u!4 &8261793285061831607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7527411466659653052, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+  m_PrefabInstance: {fileID: 1932455322729975307}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7162628149351394827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8770674215439278080, guid: 347513e7973549246b0446299d6d2bee, type: 3}
   m_PrefabInstance: {fileID: 1932455322729975307}
   m_PrefabAsset: {fileID: 0}

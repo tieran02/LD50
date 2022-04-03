@@ -210,4 +210,9 @@ public class WorkManager : MonoBehaviour
             }
         }
     }
+
+    public void DecreaseValueDifficulty(ref float value)
+    {
+        value *= DifficultyCurve.Evaluate(currentShift);
+    }
 }

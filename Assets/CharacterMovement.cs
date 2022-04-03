@@ -46,8 +46,8 @@ public class CharacterMovement : MonoBehaviour
         }
         if(!groundedPlayer)
         {
-        //playerVelocity.y += gravityValue * Time.deltaTime;
-        //controller.Move(playerVelocity * Time.deltaTime);
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
         
         }
         //controller.height = -1f;

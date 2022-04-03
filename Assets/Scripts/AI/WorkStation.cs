@@ -46,6 +46,7 @@ public class WorkStation : MonoBehaviour
         PlayerDetection.isTrigger = true;
         currentWorkers = new List<AIAgent>();
 
+        LastBreakTime = -9999.0f;
         LastPassiveTime = Time.time + Random.Range(PassiveBreakFrequency * 0.5f, 10.0f);
     }
 
