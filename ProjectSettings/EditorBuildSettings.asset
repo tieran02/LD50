@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: d2d3d71e5d05ac34ba7a0ef968101d77
+  - enabled: 1
+    path: Assets/Scenes/NextShiftScene.unity
+    guid: 0e9f6044733f8544ea5c724eaf9ab91a
   m_configObjects: {}

@@ -37,7 +37,7 @@ public class Clock : MonoBehaviour
             int currentShift = PlayerPrefs.GetInt("CurrentShift");
             PlayerPrefs.SetInt("CurrentShift", currentShift+1);
             PlayerPrefs.Save();
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("NextShiftScene");
         }
     }
 }
