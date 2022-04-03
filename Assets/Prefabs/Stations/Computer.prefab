@@ -307,15 +307,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorkPoints: []
-  Cooldown: 10
+  Cooldown: 30
   TimeToFail: 30
   StressToAdd: 5
+  StressToRemove: 0
   WorkerBreakChance: 0
-  PassiveBreakChance: 0.1
+  PassiveBreakChance: 0.07
   PassiveBreakFrequency: 10
   ShiftTask: 0
   PlayerOnly: 0
   PassiveOnly: 1
+  WaitForAllWorkers: 0
+  WaitWhileActive: 0
   RepairTime: 2
   ActiveParticles: {fileID: 7821307116516414385}
   active: 0

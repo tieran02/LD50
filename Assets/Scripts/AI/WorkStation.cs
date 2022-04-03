@@ -45,6 +45,8 @@ public class WorkStation : MonoBehaviour
         PlayerDetection = GetComponent<SphereCollider>();
         PlayerDetection.isTrigger = true;
         currentWorkers = new List<AIAgent>();
+
+        LastPassiveTime = Time.time + Random.Range(0, 30);
     }
 
     // Start is called before the first frame update
@@ -64,6 +66,7 @@ public class WorkStation : MonoBehaviour
             {
                 Success();
             }
+            return;
         }
 
         //Stations can also break passively
@@ -82,7 +85,6 @@ public class WorkStation : MonoBehaviour
         }
         if (ActiveParticles != null)
             ActiveParticles?.SetActive(true);
-
 
         currentTimeLeft -= Time.deltaTime;
         if(currentTimeLeft <= 0.0f)

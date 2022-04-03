@@ -3045,7 +3045,33 @@ MonoBehaviour:
   DeskTargets: []
   Stations: []
   ShiftStations: []
+  DifficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.14461274
+      outSlope: -0.14461274
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.055816136
+    - serializedVersion: 3
+      time: 9.988831
+      value: 0.01
+      inSlope: -0.10464794
+      outSlope: -0.10464794
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.051125698
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TaskSpacing: 55
   workTasks: []
+  currentShift: 0
 --- !u!4 &691964503
 Transform:
   m_ObjectHideFlags: 0
@@ -14465,6 +14491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 32400
+  acceleration: 120
 --- !u!114 &1990784226
 MonoBehaviour:
   m_ObjectHideFlags: 0

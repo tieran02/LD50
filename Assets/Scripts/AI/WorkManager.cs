@@ -21,18 +21,25 @@ public class WorkManager : MonoBehaviour
     public List<WorkStation> Stations;
     public List<WorkStation> ShiftStations;
 
+    public AnimationCurve DifficultyCurve;
+    public float TaskSpacing = 60.0f; //1 hour
+
     public Dictionary<GameObject, int> DeskOwnerLookup;
 
     [SerializeField]
     private List<WorkTask> workTasks;
     private Clock clock;
 
+    public int currentShift = 0;
 
     private void Awake()
     {
         clock = FindObjectOfType<Clock>();
+        TaskSpacing *= clock.acceleration;
+
         DeskOwnerLookup = new Dictionary<GameObject, int>();
         workTasks = new List<WorkTask>();
+        //currentShift = PlayerPrefs.GetInt("CurrentShift");
 
         //Get all targets
         foreach (var station in FindObjectsOfType<WorkStation>())
@@ -64,10 +71,10 @@ public class WorkManager : MonoBehaviour
             }
         }
 
-        CreateShiftTasks(5, 8);
+        CreateShiftTasks(8);
     }
 
-    void CreateShiftTasks(int numberOfTasks, float shiftLengthHours)
+    void CreateShiftTasks(float shiftLengthHours)
     {
         if (ShiftStations.Count == 0)
         {
@@ -75,24 +82,53 @@ public class WorkManager : MonoBehaviour
             return;
         }
 
-        float spacing = (shiftLengthHours * 3600) / numberOfTasks;
         const int startTimeInSeconds = 32400;
         int endTimeInSeconds = startTimeInSeconds + (int)(3600 * shiftLengthHours);
+        float difficultySpacing = TaskSpacing * DifficultyCurve.Evaluate(currentShift);
 
-        for (int i = 0; i < numberOfTasks; i++)
+        int maxTasks = Mathf.CeilToInt((endTimeInSeconds - startTimeInSeconds) / difficultySpacing);
+
+        for (int i = 0; i < maxTasks; i++)
         {
-            //Create tasks but don't assign an agent yet
-            float taskTime = startTimeInSeconds + (spacing * i);
-
-            //pick a random shift task
-            int shiftTask = Random.Range(0, ShiftStations.Count);
-            WorkTask task = new WorkTask
+            if (i > 0)
             {
-                assignedStaion = ShiftStations[shiftTask],
-                assignedTime = taskTime
-            };
+                WorkTask previousTask = workTasks[i - 1];
+                List<WorkStation> validStations = new List<WorkStation>();
+                foreach(var station in ShiftStations)
+                {
+                    if (previousTask.assignedStaion != station)
+                        validStations.Add(station);
+                }
 
-            workTasks.Add(task);
+                //pick a random shift task
+                int shiftTask = Random.Range(0, validStations.Count);
+                float shiftTime = previousTask.assignedTime + previousTask.assignedStaion.Cooldown + difficultySpacing;
+                shiftTime += Random.Range(5, 25);
+
+                WorkTask task = new WorkTask
+                {
+                    assignedStaion = validStations[shiftTask],
+                    assignedTime = shiftTime
+                };
+
+                workTasks.Add(task);
+            }
+            else
+            {
+                //Create tasks but don't assign an agent yet
+                float taskTime = startTimeInSeconds;
+                float timeOffset = Random.Range(5, 20);
+
+                //pick a random shift task
+                int shiftTask = Random.Range(0, ShiftStations.Count);
+                WorkTask task = new WorkTask
+                {
+                    assignedStaion = ShiftStations[shiftTask],
+                    assignedTime = taskTime + timeOffset
+                };
+
+                workTasks.Add(task);
+            }
         }
     }
 

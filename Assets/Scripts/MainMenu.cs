@@ -20,6 +20,8 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene("GameScene");
+        PlayerPrefs.SetInt("CurrentShift", 0);
+        PlayerPrefs.Save();
     }
 
     public void Quit()
