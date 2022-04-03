@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum WorkType
@@ -31,6 +32,7 @@ public class WorkManager : MonoBehaviour
     private Clock clock;
 
     public int currentShift = 0;
+    public TextMeshProUGUI ShiftText;
 
     private void Awake()
     {
@@ -39,7 +41,8 @@ public class WorkManager : MonoBehaviour
 
         DeskOwnerLookup = new Dictionary<GameObject, int>();
         workTasks = new List<WorkTask>();
-        //currentShift = PlayerPrefs.GetInt("CurrentShift");
+        currentShift = PlayerPrefs.GetInt("CurrentShift");
+        ShiftText.text = string.Format("Shift: {0}", currentShift+1);
 
         //Get all targets
         foreach (var station in FindObjectsOfType<WorkStation>())
