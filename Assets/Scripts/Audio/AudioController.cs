@@ -84,13 +84,15 @@ public class AudioController : MonoBehaviour
         if(playing == null && toInt(name)!= -1) 
         {
             sounds[toInt(name)].source.Play();
+            sounds[toInt(name)].source.loop = sounds[toInt(name)].loop;
             playing = name;
         }
         else
         {
             nextSound = name;
-            sounds[toInt(playing)].source.loop = false;
-            stopping = true;
+            //Sets looping to false
+            if(playing == "menu" || playing == "game"){sounds[toInt(playing)].source.loop = false;}
+            else if(playing == "game" || nextSound == "menu"){stopping = true;}
         }
     }
 
@@ -113,7 +115,7 @@ public class AudioController : MonoBehaviour
         }
         //When the current track is meant to be stopping, fade out the track by 5% volume every 0.1s
         stoppingTimer += Time.deltaTime;
-        if(stopping && (stoppingTimer >= 0.1) && nextSound !="game")
+        if(stopping && (stoppingTimer >= 0.1))
         {
             //Reset timer to next fade/stop point
             stoppingTimer = 0f;
@@ -131,28 +133,25 @@ public class AudioController : MonoBehaviour
             }
             
         }
-        if(stopping && nextSound == "game" && playing == "buildup")
-        {
-            stopping = false;
-        }
         scene = SceneManager.GetActiveScene();
         if(scene.name == "GameOver")
         {
-            if(playing != "end" && nextSound != "end")
+            if(playing == "null")
             {
                 Play("end");
             }
         }
         else if(scene.name == "GameScene")
         {
-            if(playing == "buildup" && nextSound != "game")
-            {
-                Play("game");
-            }
-            if(playing !="buildup" && playing != "game" && nextSound!= "game")
+            if(nextSound != "game" && playing != "buildup")
             {
                 Play("buildup");
             }
+            if((playing == "buildup" && nextSound == "buildup") || (playing == null && nextSound == "game"))
+            {
+                Play("game");
+            }
+            
             
         }
         else if(scene.name == "MainMenu" || scene.name == "NextShiftScene")
