@@ -29,7 +29,7 @@ public class AudioController : MonoBehaviour
             case "endMusic":
                 return(3);
             default:
-                return(null);            
+                return(-1);            
         }
     }
     //Convert int indexes of Sound objects in sounds to strings.
@@ -78,7 +78,7 @@ public class AudioController : MonoBehaviour
     //Plays a sound if none currently playing, otherwise sets it as next to be played, disables looping on current track and sets stopping to start next track stopping.
     public void Play(string name)
     {
-        if(playing == null && toInt(name)!= null) 
+        if(playing == null && toInt(name)!= -1) 
         {
             sounds[toInt(name)].source.Play();
         }
@@ -108,7 +108,7 @@ public class AudioController : MonoBehaviour
             }
         }
         //When the current track is meant to be stopping, fade out the track by 5% volume every 0.1s
-        stoppingTimer += time.deltaTime();
+        stoppingTimer += Time.deltaTime;
         if(stopping && ((int)stoppingTimer%0.1 >= 0))
         {
             //Reset timer to next fade/stop point
@@ -122,7 +122,7 @@ public class AudioController : MonoBehaviour
             else
             {
                 stopping = false;
-                sounds[toInt(playing)].source.volume = s2.volume;
+                sounds[toInt(playing)].source.volume = sounds[toInt(playing)].volume;
                 sounds[toInt(playing)].source.Stop();
             }
             
@@ -130,9 +130,10 @@ public class AudioController : MonoBehaviour
         //If no sound and one is queued up to play, play it and set relevant statuses.
         if(playing == null && nextSound != null)
         {
-            sounds[toInt(nextSound)].source.play();
+            sounds[toInt(nextSound)].source.Play();
+            playing = nextSound;
             nextSound = null;
-            playing = true;
+            
         }
 
     }
