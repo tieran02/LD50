@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
 {
 
     public GameObject menu;
+    public GameObject howtoplay;
     public Button topButton;
 
     // Start is called before the first frame update
@@ -54,5 +55,11 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void HowToPlay()
+    {
+        if (howtoplay)
+            howtoplay.SetActive(true);
     }
 }
