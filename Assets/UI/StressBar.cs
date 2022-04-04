@@ -6,22 +6,20 @@ using UnityEngine.UI;
 public class StressBar : MonoBehaviour
 {
 
-    public Slider slider;
+    public Image insideImage;
 
     private void Awake()
     {
-        slider = GetComponent<Slider>();
+        insideImage = GetComponent<Image>();
     }
 
     public void Initialize()
     {
-        slider.maxValue = 1;
-        slider.minValue = 0;
-        slider.value = 0.082f;
+        insideImage.fillAmount = 0.0f;
     }
     public void setStress(float stress)
     {
         //Map stress value from 0-> 100 to the range of values that the stress bar is visible for.
-        slider.value = ((float)stress)*((0.755f-0.082f)/(float)100);
+        insideImage.fillAmount = stress/100.0f;
     }
 }
