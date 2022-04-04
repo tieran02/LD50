@@ -229,6 +229,10 @@ PrefabInstance:
       propertyPath: m_FlipY
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1593338110555734965, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: ActiveParticles
       value: 
