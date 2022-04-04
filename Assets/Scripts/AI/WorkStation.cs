@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SphereCollider))]
 public class WorkStation : MonoBehaviour
 {
     public Transform[] WorkPoints;
@@ -24,11 +24,13 @@ public class WorkStation : MonoBehaviour
     public bool WaitWhileActive = false;
 
     public float RepairTime = 2.0f;
-    private SphereCollider PlayerDetection;
+    private Collider PlayerDetection;
     private bool PlayerWithinRange = false;
     private float currentRepairStatus = 0.0f;
 
     public GameObject ActiveParticles;
+    public Image BrokenImage;
+    public Image RepairImage;
 
     private float LastBreakTime = 0.0f;
     private float LastPassiveTime = 0.0f;
@@ -42,7 +44,7 @@ public class WorkStation : MonoBehaviour
     private void Awake()
     {
         workManager = FindObjectOfType<WorkManager>();
-        PlayerDetection = GetComponent<SphereCollider>();
+        PlayerDetection = GetComponent<Collider>();
         PlayerDetection.isTrigger = true;
         currentWorkers = new List<AIAgent>();
 
@@ -59,9 +61,22 @@ public class WorkStation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerWithinRange && Input.GetButton("Use") && active)
+        if (RepairImage)
+            RepairImage.fillAmount = 0.0f;
+
+        if (PlayerWithinRange && Input.GetButton("Use") && active)
         {
             Debug.Log(currentRepairStatus);
+
+            if (RepairImage)
+            {
+                float value = currentRepairStatus / RepairTime;
+                RepairImage.fillAmount = value;
+            }
+
+            if (BrokenImage != null)
+                BrokenImage.enabled = false;
+
             currentRepairStatus += Time.deltaTime;
             if(currentRepairStatus >= RepairTime)
             {
@@ -69,9 +84,10 @@ public class WorkStation : MonoBehaviour
             }
             return;
         }
+        currentRepairStatus = 0.0f;
 
         //Stations can also break passively
-        if(!active && PassiveBreakChance > 0.0f && !OnPassiveCooldown())
+        if (!active && PassiveBreakChance > 0.0f && !OnPassiveCooldown())
         {
             LastPassiveTime = Time.time;
             if (Random.value <= PassiveBreakChance)
@@ -82,10 +98,14 @@ public class WorkStation : MonoBehaviour
         {
             if(ActiveParticles != null)
                 ActiveParticles.SetActive(false);
+            if (BrokenImage != null)
+                BrokenImage.enabled = false;
             return;
         }
         if (ActiveParticles != null)
-            ActiveParticles?.SetActive(true);
+            ActiveParticles.SetActive(true);
+        if (BrokenImage != null)
+            BrokenImage.enabled = true;
 
         currentTimeLeft -= Time.deltaTime;
         if(currentTimeLeft <= 0.0f)
@@ -222,11 +242,19 @@ public class WorkStation : MonoBehaviour
         workManager.RemoveTask(this);
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             PlayerWithinRange = true;
+        }
+    }
+
+    void OnTriggerLeave(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            PlayerWithinRange = false;
         }
     }
 }
