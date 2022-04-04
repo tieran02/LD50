@@ -250,7 +250,7 @@ public class WorkStation : MonoBehaviour
         }
     }
 
-    void OnTriggerLeave(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
