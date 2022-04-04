@@ -23,13 +23,13 @@ public class AudioController : MonoBehaviour
     {
         switch(input)
         {
-            case "menuMusic":
+            case "menu":
                 return(0);
-            case "gameBuildup":
+            case "buildup":
                 return(1);
-            case "gameMain":
+            case "game":
                 return(2);
-            case "endMusic":
+            case "end":
                 return(3);
             default:
                 return(-1);            
@@ -41,13 +41,13 @@ public class AudioController : MonoBehaviour
         switch(input)
         {
             case 0:
-                return("menuMusic");
+                return("menu");
             case 1:
-                return("gameBuildup");
+                return("buildup");
             case 2:
-                return("gameMain");
+                return("game");
             case 3:
-                return("endMusic");
+                return("end");
             default:
                 return(null);            
         }
@@ -84,6 +84,7 @@ public class AudioController : MonoBehaviour
         if(playing == null && toInt(name)!= -1) 
         {
             sounds[toInt(name)].source.Play();
+            playing = name;
         }
         else
         {
@@ -108,19 +109,18 @@ public class AudioController : MonoBehaviour
             if (s.source.isPlaying)
             {
                 playing = s.name;
-                Debug.Log(s.name);
             }
         }
         //When the current track is meant to be stopping, fade out the track by 5% volume every 0.1s
         stoppingTimer += Time.deltaTime;
-        if(stopping && (stoppingTimer >= 1))
+        if(stopping && (stoppingTimer >= 0.1) && nextSound !="game")
         {
             //Reset timer to next fade/stop point
             stoppingTimer = 0f;
             //If currently playing sound is louder than 5% lower by 5%
-            if(sounds[toInt(playing)].source.volume>=0.1f)
+            if(sounds[toInt(playing)].source.volume>=0.05f)
             {
-                sounds[toInt(playing)].source.volume -= 0.1f;
+                sounds[toInt(playing)].source.volume -= 0.05f;
             }
             //Stop track as its silent, reset parameters from clip, reset stopping.
             else
@@ -131,32 +131,39 @@ public class AudioController : MonoBehaviour
             }
             
         }
-        //If no sound and one is queued up to play, play it and set relevant statuses.
-        if(playing == null && nextSound != null)
+        if(stopping && nextSound == "game" && playing == "buildup")
         {
-            sounds[toInt(nextSound)].source.Play();
-            playing = nextSound;
-            nextSound = null;
+            stopping = false;
+        }
+        scene = SceneManager.GetActiveScene();
+        if(scene.name == "GameOver")
+        {
+            if(playing != "end" && nextSound != "end")
+            {
+                Play("end");
+            }
+        }
+        else if(scene.name == "GameScene")
+        {
+            if(playing == "buildup" && nextSound != "game")
+            {
+                Play("game");
+            }
+            if(playing !="buildup" && playing != "game" && nextSound!= "game")
+            {
+                Play("buildup");
+            }
             
         }
-        if(scene != SceneManager.GetActiveScene())
+        else if(scene.name == "MainMenu" || scene.name == "NextShiftScene")
         {
-            scene = SceneManager.GetActiveScene();
-            if(scene.name == "GameOver")
+            if(playing != "menu" && nextSound != "menu")
             {
-                Play("endMusic");
+                Play("menu");
             }
-            else if(scene.name == "GameScene")
-            {
-                Play("gameBuildup");
-                Play("gameMain");
-            }
-            else
-            {
-                //Play("menuMusic");
-            }    
+        }    
             
-        }
+        
         
 
     }

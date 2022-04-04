@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 116591133}
   - component: {fileID: 116591132}
   m_Layer: 0
-  m_Name: Music
+  m_Name: AudioController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,29 +196,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: menuMusic
+  - name: menu
     clip: {fileID: 8300000, guid: 29e1bcd128b2bb04c997e26235806fb7, type: 3}
     loop: 1
     volume: 1
-    pitch: 0
+    pitch: 1
     source: {fileID: 0}
-  - name: gameBuildup
+  - name: buildup
     clip: {fileID: 8300000, guid: 63fe3ecdb4bfca949958965daf13befa, type: 3}
     loop: 0
     volume: 1
-    pitch: 0
+    pitch: 1
     source: {fileID: 0}
-  - name: gameMain
+  - name: game
     clip: {fileID: 8300000, guid: ba8a818fecfec404f90b1a5d5a376247, type: 3}
     loop: 1
     volume: 1
-    pitch: 0
+    pitch: 1
     source: {fileID: 0}
-  - name: endMusic
+  - name: end
     clip: {fileID: 8300000, guid: 084ea8f14004c374fa919947abd46955, type: 3}
     loop: 0
     volume: 1
-    pitch: 0
+    pitch: 1
     source: {fileID: 0}
 --- !u!4 &116591133
 Transform:
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 160.7
+  m_fontSize: 90.65
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 160.7
+  m_fontSize: 87.2
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
