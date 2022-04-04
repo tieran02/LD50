@@ -225,6 +225,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2225699759655998490}
     m_Modifications:
+    - target: {fileID: 500194531698287955, guid: 347513e7973549246b0446299d6d2bee, type: 3}
+      propertyPath: m_FlipY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5939839395052533433, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: ActiveParticles
       value: 
@@ -279,11 +283,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8191590958470687283, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8191590958470687283, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8191590958470687283, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_LocalRotation.y
@@ -295,7 +299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8191590958470687283, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8770674215439278080, guid: 347513e7973549246b0446299d6d2bee, type: 3}
       propertyPath: m_IsActive
