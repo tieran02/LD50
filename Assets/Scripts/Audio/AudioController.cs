@@ -1,5 +1,6 @@
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class AudioController : MonoBehaviour
@@ -10,23 +11,25 @@ public class AudioController : MonoBehaviour
     //Tracks whether AudioController is already instanced
     public static AudioController instance;
     //Tracks whether another sound is playing
-    private string playing;
-    private bool stopping;
-    private float stoppingTimer;
-    private string nextSound;
+    private string playing = null;
+    private bool stopping = false;
+    private float stoppingTimer = 0f;
+    private string nextSound = null;
+
+    private Scene scene;
 
     //Convert names of Sound objects in sounds to int indexes of sounds.
     private int toInt(string input)
     {
         switch(input)
         {
-            case "menuMusic":
+            case "menu":
                 return(0);
-            case "gameBuildup":
+            case "buildup":
                 return(1);
-            case "gameMain":
+            case "game":
                 return(2);
-            case "endMusic":
+            case "end":
                 return(3);
             default:
                 return(-1);            
@@ -38,13 +41,13 @@ public class AudioController : MonoBehaviour
         switch(input)
         {
             case 0:
-                return("menuMusic");
+                return("menu");
             case 1:
-                return("gameBuildup");
+                return("buildup");
             case 2:
-                return("gameMain");
+                return("game");
             case 3:
-                return("endMusic");
+                return("end");
             default:
                 return(null);            
         }
@@ -81,18 +84,33 @@ public class AudioController : MonoBehaviour
         if(playing == null && toInt(name)!= -1) 
         {
             sounds[toInt(name)].source.Play();
+            sounds[toInt(name)].source.loop = sounds[toInt(name)].loop;
+            playing = name;
         }
         else
         {
             nextSound = name;
-            sounds[toInt(playing)].source.loop = false;
-            stopping = true;
+            //Sets looping to false
+            if(playing == "menu")
+            {
+                sounds[0].source.loop = false;
+                stopping = true;
+            }
+            else if(playing == "game")
+            {
+                sounds[2].source.loop = false;
+                stopping = true;
+            }
+            else if(playing == "buildup" && (nextSound == "menu" || nextSound == "end"))
+            {
+                stopping = true;
+            }
         }
     }
 
     void Start()
     {
-        
+        sounds[0].source.Play();
     }
 
     // Update is called once per frame
@@ -109,12 +127,12 @@ public class AudioController : MonoBehaviour
         }
         //When the current track is meant to be stopping, fade out the track by 5% volume every 0.1s
         stoppingTimer += Time.deltaTime;
-        if(stopping && ((int)stoppingTimer%0.1 >= 0))
+        if(stopping && (stoppingTimer >= 0.1))
         {
             //Reset timer to next fade/stop point
             stoppingTimer = 0f;
             //If currently playing sound is louder than 5% lower by 5%
-            if(sounds[toInt(playing)].volume>=0.05f)
+            if(sounds[toInt(playing)].source.volume>=0.05f)
             {
                 sounds[toInt(playing)].source.volume -= 0.05f;
             }
@@ -124,17 +142,47 @@ public class AudioController : MonoBehaviour
                 stopping = false;
                 sounds[toInt(playing)].source.volume = sounds[toInt(playing)].volume;
                 sounds[toInt(playing)].source.Stop();
+                playing = null;
             }
             
         }
-        //If no sound and one is queued up to play, play it and set relevant statuses.
-        if(playing == null && nextSound != null)
+
+        scene = SceneManager.GetActiveScene();
+        if(scene.name == "GameOver")
         {
-            sounds[toInt(nextSound)].source.Play();
-            playing = nextSound;
-            nextSound = null;
+            if(playing == "game" || playing == "buildup") 
+            {
+                Play("end");
+            }
+            else if(playing == null && nextSound == "end")
+            {
+                Play("end");
+                nextSound = null;
+            }
+        }
+        else if(scene.name == "GameScene")
+        {
+            if(nextSound != "game" && playing != "buildup")
+            {
+                Play("buildup");
+            }
+            if((playing == "buildup" && nextSound == "buildup") || (playing == null && nextSound == "game"))
+            {
+                Play("game");
+            }
+            
             
         }
+        else if(scene.name == "MainMenu" || scene.name == "NextShiftScene")
+        {
+            if(playing != "menu")
+            {
+                Play("menu");
+            }
+        }    
+            
+        
+        
 
     }
     
