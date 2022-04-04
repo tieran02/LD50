@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4657429170285603481}
   - component: {fileID: 5881318699297541355}
   - component: {fileID: 2166518636771117761}
+  - component: {fileID: 1729811131968516773}
   m_Layer: 5
   m_Name: Broken
   m_TagString: Untagged
@@ -75,6 +76,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!111 &1729811131968516773
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104615144374325539}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: a4b6b2bdb4bdcdc4781e3c3159c3a552, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: a4b6b2bdb4bdcdc4781e3c3159c3a552, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2168030073159134978
 GameObject:
   m_ObjectHideFlags: 0
