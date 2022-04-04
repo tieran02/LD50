@@ -91,8 +91,20 @@ public class AudioController : MonoBehaviour
         {
             nextSound = name;
             //Sets looping to false
-            if(playing == "menu" || playing == "game"){sounds[toInt(playing)].source.loop = false;}
-            else if(playing == "game" || nextSound == "menu"){stopping = true;}
+            if(playing == "menu")
+            {
+                sounds[0].source.loop = false;
+                stopping = true;
+            }
+            else if(playing == "game")
+            {
+                sounds[2].source.loop = false;
+                stopping = true;
+            }
+            else if(playing == "buildup" && (nextSound == "menu" || nextSound == "end"))
+            {
+                stopping = true;
+            }
         }
     }
 
@@ -130,15 +142,18 @@ public class AudioController : MonoBehaviour
                 stopping = false;
                 sounds[toInt(playing)].source.volume = sounds[toInt(playing)].volume;
                 sounds[toInt(playing)].source.Stop();
+                playing = null;
             }
             
         }
+
         scene = SceneManager.GetActiveScene();
         if(scene.name == "GameOver")
         {
-            if(playing == "null")
+            if((nextSound != "end" && playing != null) || (nextSound == "end" && playing == null))
             {
                 Play("end");
+                nextSound = null;
             }
         }
         else if(scene.name == "GameScene")
@@ -156,7 +171,7 @@ public class AudioController : MonoBehaviour
         }
         else if(scene.name == "MainMenu" || scene.name == "NextShiftScene")
         {
-            if(playing != "menu" && nextSound != "menu")
+            if(playing != "menu")
             {
                 Play("menu");
             }
