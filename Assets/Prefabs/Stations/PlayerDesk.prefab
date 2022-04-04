@@ -881,8 +881,8 @@ MonoBehaviour:
   WorkPoints: []
   Cooldown: 30
   TimeToFail: 30
-  StressToAdd: 5
-  StressToRemove: 10
+  StressToAdd: 20
+  StressToRemove: 5
   WorkerBreakChance: 0
   PassiveBreakChance: 0.1
   PassiveBreakFrequency: 10

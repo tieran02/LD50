@@ -426,7 +426,7 @@ MonoBehaviour:
   Cooldown: 10
   TimeToFail: 6
   StressToAdd: 40
-  StressToRemove: 20
+  StressToRemove: 10
   WorkerBreakChance: 1
   PassiveBreakChance: 0
   PassiveBreakFrequency: 10
