@@ -217,7 +217,7 @@ MonoBehaviour:
   - name: end
     clip: {fileID: 8300000, guid: 084ea8f14004c374fa919947abd46955, type: 3}
     loop: 0
-    volume: 0.6
+    volume: 0.4
     pitch: 1
     source: {fileID: 0}
 --- !u!4 &116591133
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 160.7
+  m_fontSize: 157.65
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 160.7
+  m_fontSize: 157.65
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1

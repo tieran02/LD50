@@ -150,7 +150,11 @@ public class AudioController : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         if(scene.name == "GameOver")
         {
-            if((nextSound != "end" && playing != null) || (nextSound == "end" && playing == null))
+            if(playing == "game" || playing == "buildup") 
+            {
+                Play("end");
+            }
+            else if(playing == null && nextSound == "end")
             {
                 Play("end");
                 nextSound = null;
