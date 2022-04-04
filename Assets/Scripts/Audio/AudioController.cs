@@ -1,5 +1,6 @@
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class AudioController : MonoBehaviour
@@ -10,10 +11,12 @@ public class AudioController : MonoBehaviour
     //Tracks whether AudioController is already instanced
     public static AudioController instance;
     //Tracks whether another sound is playing
-    private string playing;
-    private bool stopping;
-    private float stoppingTimer;
-    private string nextSound;
+    private string playing = null;
+    private bool stopping = false;
+    private float stoppingTimer = 0f;
+    private string nextSound = null;
+
+    private Scene scene;
 
     //Convert names of Sound objects in sounds to int indexes of sounds.
     private int toInt(string input)
@@ -92,7 +95,7 @@ public class AudioController : MonoBehaviour
 
     void Start()
     {
-        
+        sounds[0].source.Play();
     }
 
     // Update is called once per frame
@@ -105,18 +108,19 @@ public class AudioController : MonoBehaviour
             if (s.source.isPlaying)
             {
                 playing = s.name;
+                Debug.Log(s.name);
             }
         }
         //When the current track is meant to be stopping, fade out the track by 5% volume every 0.1s
         stoppingTimer += Time.deltaTime;
-        if(stopping && ((int)stoppingTimer%0.1 >= 0))
+        if(stopping && (stoppingTimer >= 1))
         {
             //Reset timer to next fade/stop point
             stoppingTimer = 0f;
             //If currently playing sound is louder than 5% lower by 5%
-            if(sounds[toInt(playing)].volume>=0.05f)
+            if(sounds[toInt(playing)].source.volume>=0.1f)
             {
-                sounds[toInt(playing)].source.volume -= 0.05f;
+                sounds[toInt(playing)].source.volume -= 0.1f;
             }
             //Stop track as its silent, reset parameters from clip, reset stopping.
             else
@@ -135,6 +139,25 @@ public class AudioController : MonoBehaviour
             nextSound = null;
             
         }
+        if(scene != SceneManager.GetActiveScene())
+        {
+            scene = SceneManager.GetActiveScene();
+            if(scene.name == "GameOver")
+            {
+                Play("endMusic");
+            }
+            else if(scene.name == "GameScene")
+            {
+                Play("gameBuildup");
+                Play("gameMain");
+            }
+            else
+            {
+                //Play("menuMusic");
+            }    
+            
+        }
+        
 
     }
     
