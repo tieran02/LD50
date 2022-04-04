@@ -1486,6 +1486,67 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2130862562246850932, guid: b333d3478a2dfab448a5aa535e3a25f3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b333d3478a2dfab448a5aa535e3a25f3, type: 3}
+--- !u!1001 &577051850
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1545854459}
+    m_Modifications:
+    - target: {fileID: 1378028503423136090, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_Name
+      value: AIAgent (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136090, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.476455
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.828534
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0886631
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
 --- !u!1001 &591038450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1843,7 +1904,7 @@ GameObject:
   - component: {fileID: 603649594}
   m_Layer: 0
   m_Name: Box Volume (5)
-  m_TagString: Untagged
+  m_TagString: WalkZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,6 +1957,11 @@ BoxCollider:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
   m_PrefabInstance: {fileID: 1817423699}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &645561363 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1378028503423136094, guid: 33eddc6ac3409bd43905dc4cccc0a5d4, type: 3}
+  m_PrefabInstance: {fileID: 577051850}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &655599354
 PrefabInstance:
@@ -2020,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6918441676620713133, guid: 2cc60f7589eaafd40be9ea483b0ebac6, type: 3}
       propertyPath: walkVolumes.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6918441676620713133, guid: 2cc60f7589eaafd40be9ea483b0ebac6, type: 3}
       propertyPath: walkVolumes.Array.data[0]
@@ -4555,7 +4621,7 @@ GameObject:
   - component: {fileID: 1211034900}
   m_Layer: 0
   m_Name: Box Volume (3)
-  m_TagString: Untagged
+  m_TagString: WalkZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4892,7 +4958,7 @@ GameObject:
   - component: {fileID: 1358799218}
   m_Layer: 0
   m_Name: Box Volume (4)
-  m_TagString: Untagged
+  m_TagString: WalkZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6531,6 +6597,7 @@ Transform:
   - {fileID: 1468921609}
   - {fileID: 305665083}
   - {fileID: 1329704255}
+  - {fileID: 645561363}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -602,7 +602,7 @@ MonoBehaviour:
   PassiveOnly: 1
   WaitForAllWorkers: 0
   WaitWhileActive: 0
-  RepairTime: 2
+  RepairTime: 0.8
   ActiveParticles: {fileID: 8770674215439278080}
   BrokenImage: {fileID: 32371520524843556}
   RepairImage: {fileID: 7911627973552761603}

@@ -171,12 +171,16 @@ public class WorkStation : MonoBehaviour
 
     public bool OnCooldown()
     {
-        return Time.time < LastBreakTime + Cooldown;
+        float scaledCooldown = Cooldown;
+        workManager.DecreaseValueDifficulty(ref scaledCooldown);
+        return Time.time < LastBreakTime + Mathf.Max(Cooldown * 0.5f, scaledCooldown);
     }
 
     public bool OnPassiveCooldown()
     {
-        return Time.time < LastPassiveTime + PassiveBreakFrequency;
+        float scaledCooldown = PassiveBreakFrequency;
+        workManager.DecreaseValueDifficulty(ref scaledCooldown);
+        return Time.time < LastPassiveTime + Mathf.Max(PassiveBreakFrequency * 0.5f, scaledCooldown);
     }
 
     public void WorkerUseStation(AIAgent agent)
