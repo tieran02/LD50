@@ -14,7 +14,7 @@ public class GameOverScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Submit"))
+        if(Input.anyKeyDown)
         {
             SceneManager.LoadScene("MainMenu");
         }
